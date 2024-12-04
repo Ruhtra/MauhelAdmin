@@ -23,6 +23,12 @@ export function NavTrigger() {
     navigate(-1);
   };
 
+  const isUUID = (str: string) => {
+    const uuidRegex =
+      /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+    return uuidRegex.test(str);
+  };
+
   return (
     <div className="flex w-full items-center justify-between space-x-4">
       <div className="flex gap-4">
@@ -35,23 +41,26 @@ export function NavTrigger() {
           <Menu className="mr-2 h-4 w-4" />
           Menu
         </Button>
-
         <Breadcrumb className="flex items-center">
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href="/">Home</BreadcrumbLink>
+              {/* Atualizado o link de Home para /admin */}
+              <BreadcrumbLink href="/admin">Home</BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             {pathnames.map((name, index) => {
+              if (isUUID(name)) return null;
+              if (name === "admin") return null;
+
               const routeTo = `/${pathnames.slice(0, index + 1).join("/")}`;
               const isLast = index === pathnames.length - 1;
+
               return (
                 <BreadcrumbItem key={routeTo}>
                   {isLast ? (
                     <BreadcrumbPage>{name}</BreadcrumbPage>
                   ) : (
                     <>
-                      {/* <BreadcrumbLink href={routeTo}>{name}</BreadcrumbLink> */}
                       <BreadcrumbLink asChild>
                         <Link to={routeTo}>{name}</Link>
                       </BreadcrumbLink>

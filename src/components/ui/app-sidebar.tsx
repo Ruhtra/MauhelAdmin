@@ -47,6 +47,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 isActive:
                   location.pathname === `/admin/exams/${idExam}/questions`,
               },
+              {
+                title: "Textos",
+                url: `/admin/exams/${idExam}/texts`,
+                isActive: location.pathname === `/admin/exams/${idExam}/texts`,
+              },
             ]
           : undefined,
       },
