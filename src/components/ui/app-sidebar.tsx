@@ -10,14 +10,16 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { NavUser } from "./nav/nav-user";
-import { NavMain } from "./nav/nav-main";
-import { Link } from "react-router";
+import { NavMain, NavMainProps } from "./nav/nav-main";
+import { Link, useLocation, useParams } from "react-router";
 import { useAuth } from "@/contexts/AuthContext";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { logout } = useAuth();
+  const location = useLocation(); // Para acessar a URL atual
+  const { idExam } = useParams();
 
-  const data = {
+  const data: { user: any; navMain: NavMainProps[] } = {
     user: {
       name: "Kawan Silva",
       email: "kawanarhtuskate@gmail.com",
@@ -28,16 +30,29 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         title: "Dashboard",
         url: "/admin/dashboard",
         icon: Home,
-        isActive: true,
+        isActive: location.pathname === "/admin/dashboard", // Verifica se a rota é a dashboard
       },
       {
-        title: "Provas",
+        title: `Provas ${
+          !!idExam ? `(${location.pathname.split("/").pop()})` : ""
+        }`,
         url: "/admin/exams",
         icon: Calendar,
-        isActive: false,
+        isActive: location.pathname.includes("/admin/exams"),
+        items: !!idExam
+          ? [
+              {
+                title: "Questões",
+                url: `/admin/exams/${idExam}/questions`,
+                isActive:
+                  location.pathname === `/admin/exams/${idExam}/questions`,
+              },
+            ]
+          : undefined,
       },
     ],
   };
+
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>

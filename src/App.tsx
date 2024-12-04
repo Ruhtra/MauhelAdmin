@@ -13,8 +13,14 @@ function Render() {
         <Route path="dashboard" element={<DashboardPage />} />
         <Route path="exams">
           <Route index element={<ExamsPage />} />
-          <Route path="questions" element={<QuestionsExamPage />} />
+          <Route path=":idExam">
+            <Route index element={<Navigate to="questions" />} />
+            <Route path="questions" element={<QuestionsExamPage />} />
+          </Route>
         </Route>
+
+        <Route index element={<Navigate to="/admin/dashboard" />} />
+        <Route path="*" element={<Navigate to="/admin/dashboard" />}></Route>
       </Route>
     </Routes>
   );
