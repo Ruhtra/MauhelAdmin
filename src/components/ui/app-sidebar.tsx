@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/sidebar";
 import { NavUser } from "./nav/nav-user";
 import { NavMain } from "./nav/nav-main";
-// import { rotas } from '@/App'
 import { Link } from "react-router";
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -21,7 +20,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const data = {
     user: {
       name: "Kawan Silva",
-      email: "kawanarhtuskate@gmail.comcom",
+      email: "kawanarhtuskate@gmail.com",
       avatar: "/avatars/avatar.jpg",
     },
     navMain: [
@@ -50,11 +49,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <img
                     src="/logo.png"
                     className="h-full w-full object-cover"
-                    alt="Onco Clinica Logo"
+                    alt="Mauhel IFRN Logo"
                   />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate text-lg font-semibold">
+                  <span className="truncate text-base font-semibold">
                     Mauhel IFRN
                   </span>
                   <span className="text-muted-foreground truncate text-xs">

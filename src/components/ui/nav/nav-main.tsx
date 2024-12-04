@@ -1,6 +1,4 @@
-"use client";
-
-import { ChevronRight, type LucideIcon } from "lucide-react";
+import { ChevronRight, LucideIcon } from "lucide-react";
 import { useCallback } from "react";
 import { Link, useLocation } from "react-router";
 
@@ -45,7 +43,9 @@ export function NavMain({
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Menu Principal</SidebarGroupLabel>
+      <SidebarGroupLabel className="text-xs font-medium">
+        Menu Principal
+      </SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
@@ -57,7 +57,7 @@ export function NavMain({
               >
                 <Link
                   to={item.url}
-                  className="flex items-center"
+                  className="flex items-center text-sm"
                   onClick={handleLinkClick}
                 >
                   <item.icon className="mr-2 h-4 w-4" />
@@ -82,7 +82,7 @@ export function NavMain({
                           >
                             <Link
                               to={subItem.url}
-                              className="flex items-center"
+                              className="flex items-center text-sm"
                               onClick={handleLinkClick}
                             >
                               <span className="mr-2 h-1 w-1 rounded-full bg-current" />

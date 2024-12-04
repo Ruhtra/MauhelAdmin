@@ -63,7 +63,7 @@ function SortableItem({ id, index, onRemove }: SortableItemProps) {
                 placeholder={`Alternativa ${String.fromCharCode(65 + index)}`}
               />
             </FormControl>
-            <FormMessage />
+            <FormMessage className="text-xs" />
           </FormItem>
         )}
       />

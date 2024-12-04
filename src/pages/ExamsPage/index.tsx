@@ -54,8 +54,8 @@ export function ExamsPage() {
       : examData.filter((exam) => exam.year === filterYear);
 
   return (
-    <div className="container mx-auto">
-      <div className="mb-4 flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
+    <div className="container mx-auto px-4">
+      <div className="mb-6 flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
         <h1 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">
           Provas
         </h1>
@@ -77,7 +77,7 @@ export function ExamsPage() {
               ))}
             </SelectContent>
           </Select>
-          <Button onClick={() => setIsCreateDialogOpen(true)}>
+          <Button onClick={() => setIsCreateDialogOpen(true)} size="sm">
             <PlusCircle className="mr-2 h-4 w-4" />
             Novo Exame
           </Button>
@@ -87,17 +87,21 @@ export function ExamsPage() {
         {filteredExams.map((exam) => (
           <Card
             key={exam.id}
-            className="h-full transition-shadow hover:shadow-lg"
+            className="h-full transition-shadow hover:shadow-md"
           >
-            <CardHeader>
-              <CardTitle className="text-xl">{exam.position}</CardTitle>
+            <CardHeader className="p-4">
+              <CardTitle className="text-lg">{exam.position}</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-4 pt-0">
               <p className="mb-2 text-sm text-gray-500">{exam.instituto}</p>
               <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary">{exam.year}</Badge>
-                <Badge variant="outline">{exam.banca}</Badge>
-                <Badge>{exam.level}</Badge>
+                <Badge variant="secondary" className="text-xs">
+                  {exam.year}
+                </Badge>
+                <Badge variant="outline" className="text-xs">
+                  {exam.banca}
+                </Badge>
+                <Badge className="text-xs">{exam.level}</Badge>
               </div>
             </CardContent>
           </Card>

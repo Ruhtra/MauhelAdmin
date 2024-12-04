@@ -22,7 +22,7 @@ export function NavTrigger() {
         onClick={toggleSidebar}
         className="flex items-center px-3 py-2 text-sm font-medium"
       >
-        <Menu className="mr-2 h-5 w-5" />
+        <Menu className="mr-2 h-4 w-4" />
         Menu
       </Button>
       {showBackButton && (
@@ -30,7 +30,7 @@ export function NavTrigger() {
           onClick={handleBack}
           variant="ghost"
           size="sm"
-          className="flex items-center"
+          className="flex items-center text-sm"
         >
           <ChevronLeft className="mr-1 h-4 w-4" />
           Voltar

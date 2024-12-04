@@ -18,9 +18,11 @@ export function QuestionsSheet() {
       </SheetTrigger>
       <SheetContent className="w-full sm:max-w-md overflow-y-auto">
         <SheetHeader>
-          <SheetTitle className="text-lg">Nova Questão</SheetTitle>
+          <SheetTitle className="text-xl font-semibold">
+            Nova Questão
+          </SheetTitle>
         </SheetHeader>
-        <div className="mt-4">
+        <div className="mt-6">
           <QuestionForm />
         </div>
       </SheetContent>

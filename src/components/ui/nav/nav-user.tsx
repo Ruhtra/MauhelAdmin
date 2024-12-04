@@ -48,13 +48,13 @@ export function NavUser({ user, logout }: NavUserProps) {
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">
+                <AvatarFallback className="rounded-lg text-xs">
                   {user.name.charAt(0)}
                   {user.name.split(" ").pop()?.charAt(0)}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">{user.name}</span>
+                <span className="truncate font-medium">{user.name}</span>
                 <span className="truncate text-xs text-muted-foreground">
                   {user.email}
                 </span>
@@ -72,13 +72,13 @@ export function NavUser({ user, logout }: NavUserProps) {
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">
+                  <AvatarFallback className="rounded-lg text-xs">
                     {user.name.charAt(0)}
                     {user.name.split(" ").pop()?.charAt(0)}
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">{user.name}</span>
+                  <span className="truncate font-medium">{user.name}</span>
                   <span className="truncate text-xs text-muted-foreground">
                     {user.email}
                   </span>
@@ -88,11 +88,11 @@ export function NavUser({ user, logout }: NavUserProps) {
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <User className="mr-2 h-4 w-4" />
-              <span>Perfil</span>
+              <span className="text-sm">Perfil</span>
             </DropdownMenuItem>
             <DropdownMenuItem>
               <Settings className="mr-2 h-4 w-4" />
-              <span>Configurações</span>
+              <span className="text-sm">Configurações</span>
             </DropdownMenuItem>
             <DropdownMenuItem
               onSelect={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -102,12 +102,14 @@ export function NavUser({ user, logout }: NavUserProps) {
               ) : (
                 <Moon className="mr-2 h-4 w-4" />
               )}
-              <span>{theme === "dark" ? "Modo Claro" : "Modo Escuro"}</span>
+              <span className="text-sm">
+                {theme === "dark" ? "Modo Claro" : "Modo Escuro"}
+              </span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="text-destructive" onClick={logout}>
               <LogOut className="mr-2 h-4 w-4" />
-              <span>Sair</span>
+              <span className="text-sm">Sair</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

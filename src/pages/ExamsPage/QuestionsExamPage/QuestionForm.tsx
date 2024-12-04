@@ -68,15 +68,15 @@ export function QuestionForm() {
           name="statement"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Enunciado</FormLabel>
+              <FormLabel className="text-sm font-medium">Enunciado</FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Digite o enunciado da questão aqui"
-                  className="min-h-[80px]"
+                  className="min-h-[100px] text-sm"
                   {...field}
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-xs" />
             </FormItem>
           )}
         />
@@ -86,7 +86,7 @@ export function QuestionForm() {
           name="discipline"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Disciplina</FormLabel>
+              <FormLabel className="text-sm font-medium">Disciplina</FormLabel>
               <FormControl>
                 <Combobox
                   options={disciplines}
@@ -97,18 +97,18 @@ export function QuestionForm() {
                   searchPlaceholder="Buscar disciplina"
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-xs" />
             </FormItem>
           )}
         />
 
         <FormItem>
-          <FormLabel>Alternativas</FormLabel>
+          <FormLabel className="text-sm font-medium">Alternativas</FormLabel>
           <DraggableAlternatives />
-          <FormMessage />
+          <FormMessage className="text-xs" />
         </FormItem>
 
-        <Button type="submit" className="w-full" size="sm">
+        <Button type="submit" className="w-full text-sm">
           Salvar
         </Button>
       </form>

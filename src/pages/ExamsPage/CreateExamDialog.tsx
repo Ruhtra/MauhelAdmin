@@ -90,7 +90,9 @@ export function CreateExamDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Criar Novo Exame</DialogTitle>
+          <DialogTitle className="text-lg font-semibold">
+            Criar Novo Exame
+          </DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -100,7 +102,7 @@ export function CreateExamDialog({
                 name="year"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Ano</FormLabel>
+                    <FormLabel className="text-sm">Ano</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
@@ -108,9 +110,10 @@ export function CreateExamDialog({
                         onChange={(e) =>
                           field.onChange(parseInt(e.target.value, 10))
                         }
+                        className="text-sm"
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-xs" />
                   </FormItem>
                 )}
               />
@@ -119,13 +122,13 @@ export function CreateExamDialog({
                 name="level"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Nível</FormLabel>
+                    <FormLabel className="text-sm">Nível</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="text-sm">
                           <SelectValue placeholder="Selecione o nível" />
                         </SelectTrigger>
                       </FormControl>
@@ -135,7 +138,7 @@ export function CreateExamDialog({
                         <SelectItem value="Superior">Superior</SelectItem>
                       </SelectContent>
                     </Select>
-                    <FormMessage />
+                    <FormMessage className="text-xs" />
                   </FormItem>
                 )}
               />
@@ -145,7 +148,7 @@ export function CreateExamDialog({
               name="instituto"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>Instituto</FormLabel>
+                  <FormLabel className="text-sm">Instituto</FormLabel>
                   <FormControl>
                     <Combobox
                       options={institutos}
@@ -156,7 +159,7 @@ export function CreateExamDialog({
                       searchPlaceholder="Procurar instituto..."
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-xs" />
                 </FormItem>
               )}
             />
@@ -166,7 +169,7 @@ export function CreateExamDialog({
               name="banca"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>Banca</FormLabel>
+                  <FormLabel className="text-sm">Banca</FormLabel>
                   <FormControl>
                     <Combobox
                       options={bancas}
@@ -177,7 +180,7 @@ export function CreateExamDialog({
                       searchPlaceholder="Procurar banca..."
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-xs" />
                 </FormItem>
               )}
             />
@@ -187,16 +190,18 @@ export function CreateExamDialog({
               name="position"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Cargo</FormLabel>
+                  <FormLabel className="text-sm">Cargo</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} className="text-sm" />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-xs" />
                 </FormItem>
               )}
             />
             <DialogFooter>
-              <Button type="submit">Criar Exame</Button>
+              <Button type="submit" className="text-sm">
+                Criar Exame
+              </Button>
             </DialogFooter>
           </form>
         </Form>
