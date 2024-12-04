@@ -1,8 +1,9 @@
 import { Navigate, Route, Routes } from "react-router";
 import { DashboardPage } from "./pages/DashboardPage";
-import { ExamsPage } from "./pages/ExamsPage";
+import { QuestionsExamPage } from "./pages/ExamsPage/QuestionsExamPage";
 import { LayoutAdmin } from "./components/LayoutAdmin";
 import { AuthProvider } from "./contexts/AuthContext";
+import { ExamsPage } from "./pages/ExamsPage";
 
 function Render() {
   return (
@@ -12,6 +13,7 @@ function Render() {
         <Route path="dashboard" element={<DashboardPage />} />
         <Route path="exams">
           <Route index element={<ExamsPage />} />
+          <Route path="questions" element={<QuestionsExamPage />} />
         </Route>
       </Route>
     </Routes>
