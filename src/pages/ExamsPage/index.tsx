@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select";
 import { PlusCircle } from "lucide-react";
 import { CreateExamDialog } from "./CreateExamDialog";
+import { useNavigate } from "react-router";
 
 export interface Exam {
   id: string;
@@ -41,6 +42,7 @@ const examData: Exam[] = [
 ];
 
 export function ExamsPage() {
+  const navigate = useNavigate();
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [filterYear, setFilterYear] = useState<number | "all">("all");
 
@@ -87,7 +89,8 @@ export function ExamsPage() {
         {filteredExams.map((exam) => (
           <Card
             key={exam.id}
-            className="h-full transition-shadow hover:shadow-md"
+            onClick={() => navigate(`${exam.id}/questions`)}
+            className="h-full transition-shadow hover:shadow-md hover:border-primary cursor-pointer"
           >
             <CardHeader className="p-4">
               <CardTitle className="text-lg">{exam.position}</CardTitle>

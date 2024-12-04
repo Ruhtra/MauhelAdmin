@@ -46,7 +46,7 @@ function SortableItem({ id, index, onRemove }: SortableItemProps) {
     <Card
       ref={setNodeRef}
       style={style}
-      className="p-2 mb-2 flex items-center space-x-2 bg-white shadow-sm rounded-lg"
+      className="p-2 mb-2 flex items-center space-x-2 bg-secondary border-primary shadow-sm rounded-lg"
     >
       <div {...attributes} {...listeners} className="cursor-move">
         <GripVertical className="h-4 w-4 text-gray-400" />
