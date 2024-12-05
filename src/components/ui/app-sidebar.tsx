@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Calendar, Home } from "lucide-react";
+import { Calendar, FileText, HelpCircle, Home } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -42,15 +42,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         items: !!idExam
           ? [
               {
+                title: "Textos",
+                url: `/admin/exams/${idExam}/texts`,
+                isActive: location.pathname === `/admin/exams/${idExam}/texts`,
+                icon: FileText,
+              },
+              {
                 title: "Questões",
                 url: `/admin/exams/${idExam}/questions`,
                 isActive:
                   location.pathname === `/admin/exams/${idExam}/questions`,
-              },
-              {
-                title: "Textos",
-                url: `/admin/exams/${idExam}/texts`,
-                isActive: location.pathname === `/admin/exams/${idExam}/texts`,
+                icon: HelpCircle,
               },
             ]
           : undefined,

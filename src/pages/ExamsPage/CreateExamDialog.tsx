@@ -25,7 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Combobox } from "@/components/ui/combobox";
+import { ComboboxCreate } from "@/components/comboboxCreate";
 
 const formSchema = z.object({
   year: z.number().min(1900).max(2100),
@@ -150,7 +150,7 @@ export function CreateExamDialog({
                 <FormItem className="flex flex-col">
                   <FormLabel className="text-sm">Instituto</FormLabel>
                   <FormControl>
-                    <Combobox
+                    <ComboboxCreate
                       options={institutos}
                       value={field.value}
                       onSetValue={field.onChange}
@@ -171,7 +171,7 @@ export function CreateExamDialog({
                 <FormItem className="flex flex-col">
                   <FormLabel className="text-sm">Banca</FormLabel>
                   <FormControl>
-                    <Combobox
+                    <ComboboxCreate
                       options={bancas}
                       value={field.value}
                       onSetValue={field.onChange}

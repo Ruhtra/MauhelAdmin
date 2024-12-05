@@ -8,9 +8,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { Combobox } from "@/components/ui/combobox";
 import { DraggableAlternatives } from "./DraggableAlternatives";
 import { ComboboxSelect } from "@/components/comboxSelect";
+import { ComboboxCreate } from "@/components/comboboxCreate";
 
 export const questionFormSchema = z.object({
   linkedTexts: z.array(z.string()),
@@ -104,7 +104,7 @@ export function QuestionForm({ control }: QuestionFormProps) {
           <FormItem>
             <FormLabel className="text-sm font-medium">Disciplina</FormLabel>
             <FormControl>
-              <Combobox
+              <ComboboxCreate
                 options={disciplines}
                 value={field.value}
                 onSetValue={field.onChange}
