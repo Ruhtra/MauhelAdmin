@@ -10,8 +10,10 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Combobox } from "@/components/ui/combobox";
 import { DraggableAlternatives } from "./DraggableAlternatives";
+import { ComboboxSelect } from "@/components/comboxSelect";
 
 export const questionFormSchema = z.object({
+  linkedTexts: z.array(z.string()),
   statement: z
     .string()
     .min(1, "O enunciado é obrigatório")
@@ -43,6 +45,13 @@ const disciplines = [
   "Educação Física",
 ];
 
+// Mock data for texts
+const mockTexts = [
+  { id: "1", title: "Texto IV" },
+  { id: "2", title: "Texto V" },
+  { id: "3", title: "Texto VI" },
+];
+
 interface QuestionFormProps {
   control: Control<QuestionFormValues>;
 }
@@ -50,6 +59,26 @@ interface QuestionFormProps {
 export function QuestionForm({ control }: QuestionFormProps) {
   return (
     <>
+      <FormField
+        control={control}
+        name="linkedTexts"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel className="text-sm font-medium">
+              Textos Vinculados
+            </FormLabel>
+            <FormControl>
+              <ComboboxSelect
+                texts={[...mockTexts]}
+                selectedTexts={field.value}
+                onChange={field.onChange}
+              />
+            </FormControl>
+            <FormMessage className="text-xs" />
+          </FormItem>
+        )}
+      />
+
       <FormField
         control={control}
         name="statement"

@@ -19,6 +19,7 @@ export function QuestionsSheet() {
   const form = useForm<z.infer<typeof questionFormSchema>>({
     resolver: zodResolver(questionFormSchema),
     defaultValues: {
+      linkedTexts: [],
       statement: "",
       discipline: "",
       alternatives: [
