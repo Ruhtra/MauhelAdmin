@@ -1,7 +1,6 @@
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { Control } from "react-hook-form";
+import * as z from "zod";
 import {
-  Form,
   FormControl,
   FormField,
   FormItem,
@@ -9,10 +8,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
 import { Combobox } from "@/components/ui/combobox";
 import { DraggableAlternatives } from "./DraggableAlternatives";
-import * as z from "zod";
 
 export const questionFormSchema = z.object({
   statement: z
@@ -24,6 +21,7 @@ export const questionFormSchema = z.object({
     .array(
       z.object({
         content: z.string().min(1, "O conteúdo da alternativa é obrigatório"),
+        contentType: z.enum(["text", "image"]),
       })
     )
     .min(2, "Deve haver pelo menos duas alternativas"),
@@ -45,73 +43,57 @@ const disciplines = [
   "Educação Física",
 ];
 
-export function QuestionForm() {
-  const form = useForm<QuestionFormValues>({
-    resolver: zodResolver(questionFormSchema),
-    defaultValues: {
-      statement: "",
-      discipline: "",
-      alternatives: [{ content: "" }, { content: "" }],
-      correctAlternative: "",
-    },
-  });
+interface QuestionFormProps {
+  control: Control<QuestionFormValues>;
+}
 
-  const onSubmit = (data: QuestionFormValues) => {
-    console.log(data);
-  };
-
+export function QuestionForm({ control }: QuestionFormProps) {
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="statement"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-sm font-medium">Enunciado</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Digite o enunciado da questão aqui"
-                  className="min-h-[100px] text-sm"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage className="text-xs" />
-            </FormItem>
-          )}
-        />
+    <>
+      <FormField
+        control={control}
+        name="statement"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel className="text-sm font-medium">Enunciado</FormLabel>
+            <FormControl>
+              <Textarea
+                placeholder="Digite o enunciado da questão aqui"
+                className="min-h-[100px] text-sm"
+                {...field}
+              />
+            </FormControl>
+            <FormMessage className="text-xs" />
+          </FormItem>
+        )}
+      />
 
-        <FormField
-          control={form.control}
-          name="discipline"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-sm font-medium">Disciplina</FormLabel>
-              <FormControl>
-                <Combobox
-                  options={disciplines}
-                  value={field.value}
-                  onSetValue={field.onChange}
-                  placeholder="Selecione uma disciplina"
-                  emptyMessage="Nenhuma disciplina encontrada"
-                  searchPlaceholder="Buscar disciplina"
-                />
-              </FormControl>
-              <FormMessage className="text-xs" />
-            </FormItem>
-          )}
-        />
+      <FormField
+        control={control}
+        name="discipline"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel className="text-sm font-medium">Disciplina</FormLabel>
+            <FormControl>
+              <Combobox
+                options={disciplines}
+                value={field.value}
+                onSetValue={field.onChange}
+                placeholder="Selecione uma disciplina"
+                emptyMessage="Nenhuma disciplina encontrada"
+                searchPlaceholder="Buscar disciplina"
+              />
+            </FormControl>
+            <FormMessage className="text-xs" />
+          </FormItem>
+        )}
+      />
 
-        <FormItem>
-          <FormLabel className="text-sm font-medium">Alternativas</FormLabel>
-          <DraggableAlternatives />
-          <FormMessage className="text-xs" />
-        </FormItem>
-
-        <Button type="submit" className="w-full text-sm">
-          Salvar
-        </Button>
-      </form>
-    </Form>
+      <FormItem>
+        <FormLabel className="text-sm font-medium">Alternativas</FormLabel>
+        <DraggableAlternatives control={control} />
+        <FormMessage className="text-xs" />
+      </FormItem>
+    </>
   );
 }
