@@ -12,7 +12,6 @@ import {
 import { PlusCircle } from "lucide-react";
 import { CreateExamDialog } from "./CreateExamDialog";
 import { useNavigate } from "react-router";
-import { CreateEditorFile } from "./CreateEditorFile";
 
 export interface Exam {
   id: string;
@@ -115,8 +114,6 @@ export function ExamsPage() {
         open={isCreateDialogOpen}
         onOpenChange={setIsCreateDialogOpen}
       />
-      {/* isso é apeans para teste */}
-      <CreateEditorFile />
     </div>
   );
 }
