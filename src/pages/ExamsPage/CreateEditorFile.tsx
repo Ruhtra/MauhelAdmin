@@ -20,6 +20,7 @@ import {
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import WordLikeEditor from "@/components/wordEditor";
 
 const formSchema = z.object({
   text: z.string(),
@@ -47,7 +48,7 @@ export function CreateEditorFile() {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle className="text-lg font-semibold">
-            Criar EDITOr TEXTO
+            Criar EDITOR TEXTO
           </DialogTitle>
         </DialogHeader>
 
@@ -63,10 +64,11 @@ export function CreateEditorFile() {
                       Nº do texto
                     </FormLabel>
                     <FormControl>
-                      <EditorJs
+                      {/* <EditorJs
                         text={form.getValues("text")}
                         onChange={field.onChange}
-                      />
+                      /> */}
+                      <WordLikeEditor />
                     </FormControl>
                     <FormMessage className="text-xs" />
                   </FormItem>

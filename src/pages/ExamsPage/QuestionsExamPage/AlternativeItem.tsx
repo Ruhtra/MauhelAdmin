@@ -7,12 +7,14 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ContentTypeSelect } from "@/components/ContentTypeSelect";
 import { QuestionFormValues } from "./QuestionForm";
 import { Button } from "@/components/ui/button";
-import { GripVertical, X, ImageIcon } from "lucide-react";
+import { GripVertical, X, ImageIcon, Bold, Italic, Superscript } from 'lucide-react';
+import { useEditor, EditorContent } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import Placeholder from '@tiptap/extension-placeholder';
 
 interface AlternativeItemProps {
   index: number;
@@ -27,6 +29,28 @@ export function AlternativeItem({
 }: AlternativeItemProps) {
   const { control, setValue, watch } = useFormContext<QuestionFormValues>();
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [showToolbar, setShowToolbar] = useState(false);
+
+
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      Placeholder.configure({
+        placeholder: `Digite a alternativa ${String.fromCharCode(65 + index)}`
+      }),
+    ],
+    editorProps: {
+      attributes: {
+        class: 'outline-none h-[100%] min-h-[3em] p-1'
+      },
+    },
+    content: watch(`alternatives.${index}.content`) || "",
+    onUpdate: ({ editor }) => {
+      console.log('abkaebl');
+      
+      setValue(`alternatives.${index}.content`, editor.getHTML());
+    },
+  });
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
@@ -118,16 +142,42 @@ export function AlternativeItem({
           <FormItem className="w-full">
             <FormControl>
               {watch(`alternatives.${index}.contentType`) === "text" ? (
-                <Textarea
-                  {...field}
-                  className="w-full text-sm min-h-[40px] resize-none overflow-hidden"
-                  placeholder={`Alternativa ${String.fromCharCode(65 + index)}`}
-                  onInput={(e) => {
-                    const target = e.target as HTMLTextAreaElement;
-                    target.style.height = "auto";
-                    target.style.height = `${target.scrollHeight}px`;
+                <div
+                  className="relative"
+                  onFocus={() => setShowToolbar(true)}
+                  onBlur={(e) => {
+                    if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+                      setShowToolbar(false);
+                    }
                   }}
-                />
+                >
+                  <div
+                    className={`transition-all duration-300 ${
+                      showToolbar ? "h-12 opacity-100" : "h-0 opacity-0"
+                    } overflow-hidden mb-2`}
+                  >
+                    <div className="flex space-x-2">
+                      <Button type="button" variant="outline" size="icon" onClick={() => editor?.chain().focus().toggleBold().run()} className={editor?.isActive("bold") ? "bg-muted" : ""}>
+                        <Bold className="h-4 w-4" />
+                      </Button>
+                      <Button type="button" variant="outline" size="icon" onClick={() => editor?.chain().focus().toggleItalic().run()} className={editor?.isActive("italic") ? "bg-muted" : ""}>
+                        <Italic className="h-4 w-4" />
+                      </Button>
+                      <Button type="button" variant="outline" size="icon" onClick={() => editor?.chain().focus().toggleBold().run()} className={editor?.isActive("superscript") ? "bg-muted" : ""}>
+                        <Superscript className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="border rounded-md h-full focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
+                    <EditorContent
+                      editor={editor}
+                      content={field.value}
+                      // onChange={() => {
+                      //   field.onChange(editor?.getHTML() || '');
+                      // }}
+                    />
+                  </div>
+                </div>
               ) : (
                 <div
                   {...getRootProps()}
@@ -164,3 +214,4 @@ export function AlternativeItem({
     </div>
   );
 }
+
