@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,9 +15,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { PlusCircle } from "lucide-react";
+import { PlusCircle, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 import { CreateExamDialog } from "./CreateExamDialog";
 import { useNavigate } from "react-router";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Link } from "react-router";
 
 export interface Exam {
   id: string;
@@ -55,10 +68,20 @@ export function ExamsPage() {
       ? examData
       : examData.filter((exam) => exam.year === filterYear);
 
+  const handleEdit = (id: string) => {
+    // Implement edit functionality
+    console.log(`Edit exam ${id}`);
+  };
+
+  const handleDelete = (id: string) => {
+    // Implement delete functionality
+    console.log(`Delete exam ${id}`);
+  };
+
   return (
-    <div className="container mx-auto px-4">
+    <div className="container mx-auto px-4 py-8">
       <div className="mb-6 flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
-        <h1 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">
+        <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-200">
           Provas
         </h1>
         <div className="flex items-center space-x-4">
@@ -89,11 +112,32 @@ export function ExamsPage() {
         {filteredExams.map((exam) => (
           <Card
             key={exam.id}
-            onClick={() => navigate(`${exam.id}/questions`)}
-            className="h-full transition-shadow hover:shadow-md hover:border-primary cursor-pointer"
+            className="h-full transition-shadow hover:shadow-md"
           >
             <CardHeader className="p-4">
-              <CardTitle className="text-lg">{exam.position}</CardTitle>
+              <div className="flex justify-between items-center">
+                <CardTitle className="text-lg">{exam.position}</CardTitle>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="sm">
+                      <MoreHorizontal className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem onClick={() => handleEdit(exam.id)}>
+                      <Pencil className="mr-2 h-4 w-4" />
+                      Editar
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => handleDelete(exam.id)}
+                      className="text-red-600"
+                    >
+                      <Trash2 className="mr-2 h-4 w-4" />
+                      Deletar
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
             </CardHeader>
             <CardContent className="p-4 pt-0">
               <p className="mb-2 text-sm text-gray-500">{exam.instituto}</p>
@@ -107,6 +151,18 @@ export function ExamsPage() {
                 <Badge className="text-xs">{exam.level}</Badge>
               </div>
             </CardContent>
+            <CardFooter className="p-4 pt-0 flex justify-between">
+              <Link to={`${exam.id}/questions`}>
+                <Button variant="outline" size="sm">
+                  Questões
+                </Button>
+              </Link>
+              <Link to={`${exam.id}/texts`}>
+                <Button variant="outline" size="sm">
+                  Textos
+                </Button>
+              </Link>
+            </CardFooter>
           </Card>
         ))}
       </div>

@@ -5,6 +5,7 @@ import { LayoutAdmin } from "./components/LayoutAdmin";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ExamsPage } from "./pages/ExamsPage";
 import { TextsExamPage } from "./pages/ExamsPage/TextsExamPage";
+import CreateTextPage from "./pages/ExamsPage/TextsExamPage/CreateTextPage";
 
 function Render() {
   return (
@@ -17,7 +18,10 @@ function Render() {
           <Route path=":idExam">
             <Route index element={<Navigate to="questions" />} />
             <Route path="questions" element={<QuestionsExamPage />} />
-            <Route path="texts" element={<TextsExamPage />} />
+            <Route path="texts">
+              <Route index element={<TextsExamPage />} />
+              <Route path="create" element={<CreateTextPage />} />
+            </Route>
           </Route>
         </Route>
 

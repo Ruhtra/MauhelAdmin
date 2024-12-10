@@ -2,6 +2,14 @@ import { useState } from "react";
 import { useParams } from "react-router";
 import { QuestionCard } from "./QuestionCard";
 import { QuestionsSheet } from "./CreateAlternative/QuestionsSheet";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 
 interface Question {
   id: string;
@@ -40,20 +48,56 @@ const mockQuestions: Question[] = [
 ];
 
 export function QuestionsExamPage() {
-  const [questions, _setQuestions] = useState<Question[]>(mockQuestions);
+  const [questions, setQuestions] = useState<Question[]>(mockQuestions);
   const { examId } = useParams<{ examId: string }>();
 
+  const handleEdit = (questionId: string) => {
+    // Implement edit functionality
+    console.log(`Edit question ${questionId}`);
+  };
+
+  const handleDelete = (questionId: string) => {
+    // Implement delete functionality
+    console.log(`Delete question ${questionId}`);
+    setQuestions(questions.filter((q) => q.id !== questionId));
+  };
+
   return (
-    <div className="container mx-auto px-4">
+    <div className="container mx-auto px-4 py-8">
       <div className="mb-6 flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
-        <h1 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">
+        <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-200">
           Questões do Exame {examId}
         </h1>
         <QuestionsSheet />
       </div>
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {questions.map((question) => (
-          <QuestionCard key={question.id} question={question} />
+          <QuestionCard
+            key={question.id}
+            question={question}
+            actionMenu={
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="sm">
+                    <MoreHorizontal className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={() => handleEdit(question.id)}>
+                    <Pencil className="mr-2 h-4 w-4" />
+                    Editar
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => handleDelete(question.id)}
+                    className="text-red-600"
+                  >
+                    <Trash2 className="mr-2 h-4 w-4" />
+                    Deletar
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            }
+          />
         ))}
       </div>
     </div>

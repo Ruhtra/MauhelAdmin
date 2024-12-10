@@ -2,13 +2,6 @@ import { useState, useCallback } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -19,10 +12,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { useDropzone } from "react-dropzone";
-import { ImageIcon } from "lucide-react";
+import { Upload } from "lucide-react";
 import { ContentTypeSelect } from "@/components/ContentTypeSelect";
+import TiptapEditor from "@/components/TipTapEditor";
+import { Card, CardContent } from "@/components/ui/card";
 
 const formSchema = z.object({
   number: z.string().min(1, {
@@ -37,15 +31,7 @@ const formSchema = z.object({
   }),
 });
 
-interface CreateTextDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-}
-
-export function CreateTextDialog({
-  open,
-  onOpenChange,
-}: CreateTextDialogProps) {
+export function CreateTextForm() {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -81,30 +67,30 @@ export function CreateTextDialog({
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
-    onOpenChange(false);
+    // Handle form submission
   }
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[700px]">
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-semibold">
-            Criar Novo Texto
-          </DialogTitle>
-        </DialogHeader>
+    <Card className="w-full max-w-4xl mx-auto">
+      <CardContent className="p-6">
+        <h1 className="text-3xl font-bold mb-6">Criar Novo Texto</h1>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <div className="flex items-center space-x-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FormField
                 control={form.control}
                 name="number"
                 render={({ field }) => (
-                  <FormItem className="flex-1">
+                  <FormItem>
                     <FormLabel className="text-sm font-medium">
                       Nº do texto
                     </FormLabel>
                     <FormControl>
-                      <Input {...field} className="text-sm" />
+                      <Input
+                        {...field}
+                        className="text-sm"
+                        placeholder="Ex: 34"
+                      />
                     </FormControl>
                     <FormMessage className="text-xs" />
                   </FormItem>
@@ -114,17 +100,18 @@ export function CreateTextDialog({
                 control={form.control}
                 name="contentType"
                 render={({ field }) => (
-                  <ContentTypeSelect
-                    value={field.value}
-                    onChange={field.onChange}
-                    onTypeChange={(value) => {
-                      if (value === "text") {
-                        form.setValue("content", "");
-                        setPreviewImage(null);
-                      }
-                    }}
-                    className="flex-1"
-                  />
+                  <FormItem>
+                    <ContentTypeSelect
+                      value={field.value}
+                      onChange={field.onChange}
+                      onTypeChange={(value) => {
+                        if (value === "text") {
+                          form.setValue("content", "");
+                          setPreviewImage(null);
+                        }
+                      }}
+                    />
+                  </FormItem>
                 )}
               />
             </div>
@@ -138,10 +125,10 @@ export function CreateTextDialog({
                     Conteúdo
                   </FormLabel>
                   <FormControl>
-                    {form.watch("contentType") === "text" ? (
-                      <Textarea
-                        {...field}
-                        className="min-h-[300px] text-sm resize-y"
+                    {form.watch("contentType") == "text" ? (
+                      <TiptapEditor
+                        content={field.value}
+                        onChange={field.onChange}
                         placeholder="Digite o conteúdo do texto aqui..."
                       />
                     ) : (
@@ -164,7 +151,7 @@ export function CreateTextDialog({
                           </div>
                         ) : (
                           <div className="py-10">
-                            <ImageIcon className="mx-auto h-12 w-12 text-gray-400" />
+                            <Upload className="mx-auto h-12 w-12 text-gray-400" />
                             <p className="mt-2 text-sm text-gray-500">
                               Arraste uma imagem ou clique para selecionar
                             </p>
@@ -187,21 +174,23 @@ export function CreateTextDialog({
                     Referência
                   </FormLabel>
                   <FormControl>
-                    <Input {...field} className="text-sm italic" />
+                    <Input
+                      {...field}
+                      className="text-sm italic"
+                      placeholder="Digite a referência aqui"
+                    />
                   </FormControl>
                   <FormMessage className="text-xs" />
                 </FormItem>
               )}
             />
 
-            <DialogFooter>
-              <Button type="submit" className="text-sm">
-                Criar Texto
-              </Button>
-            </DialogFooter>
+            <Button type="submit" className="w-full">
+              Criar Texto
+            </Button>
           </form>
         </Form>
-      </DialogContent>
-    </Dialog>
+      </CardContent>
+    </Card>
   );
 }

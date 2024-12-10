@@ -15,17 +15,21 @@ interface QuestionProps {
       isCorrect: boolean;
     }[];
   };
+  actionMenu?: React.ReactNode;
 }
 
-export function QuestionCard({ question }: QuestionProps) {
+export function QuestionCard({ question, actionMenu }: QuestionProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <Card className="h-full transition-shadow hover:shadow-md">
       <CardHeader className="p-4">
         <CardTitle className="flex items-center justify-between text-lg">
-          <span className="font-medium">Questão {question.id}</span>
-          <Badge className="text-xs py-0.5 px-2">{question.discipline}</Badge>
+          <div className="flex items-center space-x-4">
+            <span className="font-medium">Questão {question.id}</span>
+            <Badge className="text-xs py-0.5 px-2">{question.discipline}</Badge>
+          </div>
+          {actionMenu}
         </CardTitle>
       </CardHeader>
       <CardContent className="p-4 pt-0">

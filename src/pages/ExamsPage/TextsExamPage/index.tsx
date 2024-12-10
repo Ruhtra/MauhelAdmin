@@ -2,8 +2,14 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
-import { CreateTextDialog } from "./CreateTextDialog";
+import { PlusCircle, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import { Link, useParams } from "react-router";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export interface Text {
   id: string;
@@ -31,27 +37,63 @@ const textData: Text[] = [
 ];
 
 export function TextsExamPage() {
-  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [texts, setTexts] = useState<Text[]>(textData);
+  const { examId } = useParams<{ examId: string }>();
+
+  const handleEdit = (textId: string) => {
+    // Implement edit functionality
+    console.log(`Edit text ${textId}`);
+  };
+
+  const handleDelete = (textId: string) => {
+    // Implement delete functionality
+    console.log(`Delete text ${textId}`);
+    setTexts(texts.filter((t) => t.id !== textId));
+  };
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="container mx-auto px-4 py-8">
       <div className="mb-6 flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
-        <h1 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">
-          Textos
+        <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-200">
+          Textos do Exame {examId}
         </h1>
-        <Button onClick={() => setIsCreateDialogOpen(true)} size="sm">
-          <PlusCircle className="mr-2 h-4 w-4" />
-          Novo Texto
-        </Button>
+        <Link to={`create`}>
+          <Button size="sm">
+            <PlusCircle className="mr-2 h-4 w-4" />
+            Novo Texto
+          </Button>
+        </Link>
       </div>
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {textData.map((text) => (
+        {texts.map((text) => (
           <Card
             key={text.id}
             className="h-full transition-shadow hover:shadow-md"
           >
             <CardHeader className="p-4">
-              <CardTitle className="text-lg">Texto {text.number}</CardTitle>
+              <div className="flex justify-between items-center">
+                <CardTitle className="text-lg">Texto {text.number}</CardTitle>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="sm">
+                      <MoreHorizontal className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem onClick={() => handleEdit(text.id)}>
+                      <Pencil className="mr-2 h-4 w-4" />
+                      Editar
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => handleDelete(text.id)}
+                      className="text-red-600"
+                    >
+                      <Trash2 className="mr-2 h-4 w-4" />
+                      Deletar
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
             </CardHeader>
             <CardContent className="p-4 pt-0">
               <p className="mb-2 text-sm text-gray-500 line-clamp-3">
@@ -69,10 +111,6 @@ export function TextsExamPage() {
           </Card>
         ))}
       </div>
-      <CreateTextDialog
-        open={isCreateDialogOpen}
-        onOpenChange={setIsCreateDialogOpen}
-      />
     </div>
   );
 }
