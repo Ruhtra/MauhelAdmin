@@ -1,7 +1,7 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Card } from "@/components/ui/card";
-import { AlternativeItem } from "./AlternativeItem";
+import { AlternativeItem } from ".";
 
 interface SortableAlternativeProps {
   id: string;
@@ -26,7 +26,7 @@ export function SortableAlternative({
     <Card
       ref={setNodeRef}
       style={style}
-      className="p-4 mb-4 bg-secondary border-primary shadow-sm rounded-lg"
+      className="p-2 mb-3 bg-secondary border-primary shadow-sm rounded-lg"
     >
       <AlternativeItem
         index={index}

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router";
 import { QuestionCard } from "./QuestionCard";
-import { QuestionsSheet } from "./QuestionsSheet";
+import { QuestionsSheet } from "./CreateAlternative/QuestionsSheet";
 
 interface Question {
   id: string;

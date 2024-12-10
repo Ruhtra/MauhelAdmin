@@ -19,6 +19,7 @@ export function QuestionsSheet() {
   const form = useForm<z.infer<typeof questionFormSchema>>({
     resolver: zodResolver(questionFormSchema),
     defaultValues: {
+      number: undefined,
       linkedTexts: [],
       statement: "",
       discipline: "",
@@ -40,11 +41,11 @@ export function QuestionsSheet() {
       <SheetTrigger asChild>
         <Button size="sm">Nova Questão</Button>
       </SheetTrigger>
-      <SheetContent className="w-full sm:max-w-md overflow-y-auto">
+      <SheetContent className="w-full sm:max-w-3xl p-6 overflow-y-auto">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <SheetHeader>
-              <SheetTitle className="text-xl font-semibold">
+              <SheetTitle className="text-2xl font-semibold">
                 Nova Questão
               </SheetTitle>
             </SheetHeader>
@@ -52,7 +53,7 @@ export function QuestionsSheet() {
               <QuestionForm control={form.control} />
             </div>
             <SheetFooter>
-              <Button type="submit" className="w-full">
+              <Button type="submit" className="w-full sm:w-auto">
                 Criar Questão
               </Button>
             </SheetFooter>

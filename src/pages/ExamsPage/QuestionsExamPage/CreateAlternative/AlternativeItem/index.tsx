@@ -9,7 +9,7 @@ import {
 import { QuestionFormValues } from "../QuestionForm";
 import { ImageArea } from "./ImageArea";
 import { Options } from "./Options";
-import { Editor } from "./Editor";
+import { Editor } from "../../../../../components/Editor";
 
 interface AlternativeItemProps {
   index: number;
@@ -24,9 +24,10 @@ export function AlternativeItem({
 }: AlternativeItemProps) {
   const { control, watch } = useFormContext<QuestionFormValues>();
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const contentType = watch(`alternatives.${index}.contentType`);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-2">
       <div className="flex items-center space-x-2">
         <Options
           index={index}
@@ -41,21 +42,26 @@ export function AlternativeItem({
         render={({ field }) => (
           <FormItem className="w-full">
             <FormControl>
-              {watch(`alternatives.${index}.contentType`) === "text" ? (
-                <Editor
-                  placeHolder={`Digite a alternativa ${String.fromCharCode(
-                    65 + index
-                  )}`}
-                  value={field.value}
-                  onChange={field.onChange}
-                />
-              ) : (
-                <ImageArea
-                  previewImage={previewImage}
-                  setPreviewImage={setPreviewImage}
-                  index={index}
-                />
-              )}
+              <div className="relative">
+                <div
+                  style={{ display: contentType === "text" ? "block" : "none" }}
+                >
+                  <Editor
+                    placeHolder={`Digite a alternativa ${String.fromCharCode(
+                      65 + index
+                    )}`}
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                </div>
+                {contentType === "image" && (
+                  <ImageArea
+                    previewImage={previewImage}
+                    setPreviewImage={setPreviewImage}
+                    index={index}
+                  />
+                )}
+              </div>
             </FormControl>
             <FormMessage className="text-xs" />
           </FormItem>

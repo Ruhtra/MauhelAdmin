@@ -13,7 +13,7 @@ import {
 } from "@dnd-kit/sortable";
 import { Button } from "@/components/ui/button";
 import { Control, useFieldArray } from "react-hook-form";
-import { QuestionFormValues } from "./QuestionForm";
+import { QuestionFormValues } from "../QuestionForm";
 import { SortableAlternative } from "./SortableAlternative";
 
 interface DraggableAlternativesProps {

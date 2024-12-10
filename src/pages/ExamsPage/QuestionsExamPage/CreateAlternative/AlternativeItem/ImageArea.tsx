@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useFormContext } from "react-hook-form";
 import { QuestionFormValues } from "../QuestionForm";
 import { useDropzone } from "react-dropzone";
