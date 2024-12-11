@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Calendar, FileText, HelpCircle, Home } from "lucide-react";
+import { Calendar, FileText, HelpCircle, Home, Users } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -56,6 +56,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               },
             ]
           : undefined,
+      },
+      {
+        title: "Usuários",
+        url: "/admin/users",
+        icon: Users,
+        isActive: location.pathname === "/admin/users",
       },
     ],
   };

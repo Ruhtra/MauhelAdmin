@@ -6,6 +6,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { ExamsPage } from "./pages/ExamsPage";
 import { TextsExamPage } from "./pages/ExamsPage/TextsExamPage";
 import CreateTextPage from "./pages/ExamsPage/TextsExamPage/CreateTextPage";
+import { UsersPage } from "./pages/ExamsPage/UsersPage";
 
 function Render() {
   return (
@@ -13,6 +14,7 @@ function Render() {
       <Route path="/" element={<Navigate to="/admin/dashboard" />} />
       <Route path="admin" element={<LayoutAdmin />}>
         <Route path="dashboard" element={<DashboardPage />} />
+        <Route path="users" element={<UsersPage />} />
         <Route path="exams">
           <Route index element={<ExamsPage />} />
           <Route path=":idExam">
