@@ -1,11 +1,12 @@
 import { useState } from "react";
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardFooter,
-} from "@/components/ui/card";
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,9 +16,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { PlusCircle, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import { PlusCircle, MoreHorizontal, Pencil, Trash2, ChevronUp, ChevronDown } from 'lucide-react';
 import { CreateExamDialog } from "./CreateExamDialog";
-import { useNavigate } from "react-router";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -55,18 +55,24 @@ const examData: Exam[] = [
 ];
 
 export function ExamsPage() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [filterYear, setFilterYear] = useState<number | "all">("all");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
   const years = Array.from(new Set(examData.map((exam) => exam.year))).sort(
     (a, b) => b - a
   );
 
-  const filteredExams =
-    filterYear === "all"
-      ? examData
-      : examData.filter((exam) => exam.year === filterYear);
+  const filteredAndSortedExams = examData
+    .filter((exam) => filterYear === "all" || exam.year === filterYear)
+    .sort((a, b) => {
+      if (sortOrder === "asc") {
+        return a.year - b.year;
+      } else {
+        return b.year - a.year;
+      }
+    });
 
   const handleEdit = (id: string) => {
     // Implement edit functionality
@@ -84,7 +90,7 @@ export function ExamsPage() {
         <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-200">
           Provas
         </h1>
-        <div className="flex items-center space-x-4">
+        <div className="flex flex-wrap items-center gap-4">
           <Select
             onValueChange={(value) =>
               setFilterYear(value === "all" ? "all" : parseInt(value))
@@ -102,69 +108,91 @@ export function ExamsPage() {
               ))}
             </SelectContent>
           </Select>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
+          >
+            {sortOrder === "asc" ? (
+              <ChevronUp className="mr-2 h-4 w-4" />
+            ) : (
+              <ChevronDown className="mr-2 h-4 w-4" />
+            )}
+            {sortOrder === "asc" ? "Mais antigos" : "Mais recentes"}
+          </Button>
           <Button onClick={() => setIsCreateDialogOpen(true)} size="sm">
             <PlusCircle className="mr-2 h-4 w-4" />
             Novo Exame
           </Button>
         </div>
       </div>
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {filteredExams.map((exam) => (
-          <Card
-            key={exam.id}
-            className="h-full transition-shadow hover:shadow-md"
-          >
-            <CardHeader className="p-4">
-              <div className="flex justify-between items-center">
-                <CardTitle className="text-lg">{exam.position}</CardTitle>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="sm">
-                      <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => handleEdit(exam.id)}>
-                      <Pencil className="mr-2 h-4 w-4" />
-                      Editar
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() => handleDelete(exam.id)}
-                      className="text-red-600"
-                    >
-                      <Trash2 className="mr-2 h-4 w-4" />
-                      Deletar
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-            </CardHeader>
-            <CardContent className="p-4 pt-0">
-              <p className="mb-2 text-sm text-gray-500">{exam.instituto}</p>
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary" className="text-xs">
-                  {exam.year}
-                </Badge>
-                <Badge variant="outline" className="text-xs">
-                  {exam.banca}
-                </Badge>
-                <Badge className="text-xs">{exam.level}</Badge>
-              </div>
-            </CardContent>
-            <CardFooter className="p-4 pt-0 flex justify-between">
-              <Link to={`${exam.id}/questions`}>
-                <Button variant="outline" size="sm">
-                  Questões
-                </Button>
-              </Link>
-              <Link to={`${exam.id}/texts`}>
-                <Button variant="outline" size="sm">
-                  Textos
-                </Button>
-              </Link>
-            </CardFooter>
-          </Card>
-        ))}
+      <div className="overflow-x-auto">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Posição</TableHead>
+              <TableHead>Ano</TableHead>
+              <TableHead>Instituto</TableHead>
+              <TableHead>Banca</TableHead>
+              <TableHead>Nível</TableHead>
+              <TableHead>Conteúdo</TableHead>
+              <TableHead className="w-[50px]">Ações</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {filteredAndSortedExams.map((exam) => (
+              <TableRow key={exam.id}>
+                <TableCell>{exam.position}</TableCell>
+                <TableCell>
+                  <Badge variant="secondary">{exam.year}</Badge>
+                </TableCell>
+                <TableCell>{exam.instituto}</TableCell>
+                <TableCell>
+                  <Badge variant="outline">{exam.banca}</Badge>
+                </TableCell>
+                <TableCell>
+                  <Badge>{exam.level}</Badge>
+                </TableCell>
+                <TableCell>
+                  <div className="flex items-center space-x-2">
+                    <Link to={`${exam.id}/questions`}>
+                      <Button variant="outline" size="sm">
+                        Questões
+                      </Button>
+                    </Link>
+                    <Link to={`${exam.id}/texts`}>
+                      <Button variant="outline" size="sm">
+                        Textos
+                      </Button>
+                    </Link>
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="sm">
+                        <MoreHorizontal className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem onClick={() => handleEdit(exam.id)}>
+                        <Pencil className="mr-2 h-4 w-4" />
+                        Editar
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() => handleDelete(exam.id)}
+                        className="text-red-600"
+                      >
+                        <Trash2 className="mr-2 h-4 w-4" />
+                        Deletar
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       </div>
       <CreateExamDialog
         open={isCreateDialogOpen}
@@ -173,3 +201,4 @@ export function ExamsPage() {
     </div>
   );
 }
+

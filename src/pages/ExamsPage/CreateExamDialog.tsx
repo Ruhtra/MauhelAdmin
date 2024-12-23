@@ -17,18 +17,17 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { ComboboxCreate } from "@/components/comboboxCreate";
+import { YearPicker } from "./YearPicker";
+
+const currentYear = new Date().getFullYear();
 
 const formSchema = z.object({
-  year: z.number().min(1900).max(2100),
+  year: z.number().min(1900, {
+    message: "O ano deve ser após 1900.",
+  }).max(currentYear, {
+    message: `O ano deve ser no máximo ${currentYear}.`,
+  }),
   instituto: z.string().min(2, {
     message: "Instituto deve ter pelo menos 2 caracteres.",
   }),
@@ -38,8 +37,8 @@ const formSchema = z.object({
   position: z.string().min(2, {
     message: "Cargo deve ter pelo menos 2 caracteres.",
   }),
-  level: z.enum(["Fundamental", "Médio", "Superior"], {
-    required_error: "Por favor selecione um nível.",
+  level: z.string().min(1, {
+    message: "Por favor selecione um nível.",
   }),
 });
 
@@ -61,6 +60,16 @@ const bancas = [
   "FUNDATEC",
 ];
 
+const niveis = ["Fundamental", "Médio", "Superior"];
+
+const cargos = [
+  "Professor",
+  "Técnico Administrativo",
+  "Analista",
+  "Assistente",
+  "Coordenador",
+];
+
 interface CreateExamDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -73,11 +82,11 @@ export function CreateExamDialog({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      year: new Date().getFullYear(),
+      year: currentYear,
       instituto: "",
       banca: "",
       position: "",
-      level: undefined,
+      level: "",
     },
   });
 
@@ -88,29 +97,27 @@ export function CreateExamDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
+      <DialogContent className="sm:max-w-[500px] p-0">
+        <DialogHeader className="px-6 pt-6 pb-4">
           <DialogTitle className="text-lg font-semibold">
             Criar Novo Exame
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 px-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <FormField
                 control={form.control}
                 name="year"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-sm">Ano</FormLabel>
+                    <FormLabel className="text-sm font-medium">Ano</FormLabel>
                     <FormControl>
-                      <Input
-                        type="number"
-                        {...field}
-                        onChange={(e) =>
-                          field.onChange(parseInt(e.target.value, 10))
-                        }
-                        className="text-sm"
+                      <YearPicker
+                        value={field.value}
+                        onChange={field.onChange}
+                        minYear={1900}
+                        maxYear={currentYear}
                       />
                     </FormControl>
                     <FormMessage className="text-xs" />
@@ -122,22 +129,17 @@ export function CreateExamDialog({
                 name="level"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-sm">Nível</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger className="text-sm">
-                          <SelectValue placeholder="Selecione o nível" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="Fundamental">Fundamental</SelectItem>
-                        <SelectItem value="Médio">Médio</SelectItem>
-                        <SelectItem value="Superior">Superior</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <FormLabel className="text-sm font-medium">Nível</FormLabel>
+                    <FormControl>
+                      <ComboboxCreate
+                        options={niveis}
+                        value={field.value}
+                        onSetValue={field.onChange}
+                        placeholder="Selecione o nível"
+                        emptyMessage="Nenhum nível encontrado."
+                        searchPlaceholder="Procurar nível..."
+                      />
+                    </FormControl>
                     <FormMessage className="text-xs" />
                   </FormItem>
                 )}
@@ -147,8 +149,8 @@ export function CreateExamDialog({
               control={form.control}
               name="instituto"
               render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel className="text-sm">Instituto</FormLabel>
+                <FormItem>
+                  <FormLabel className="text-sm font-medium">Instituto</FormLabel>
                   <FormControl>
                     <ComboboxCreate
                       options={institutos}
@@ -163,13 +165,12 @@ export function CreateExamDialog({
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="banca"
               render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel className="text-sm">Banca</FormLabel>
+                <FormItem>
+                  <FormLabel className="text-sm font-medium">Banca</FormLabel>
                   <FormControl>
                     <ComboboxCreate
                       options={bancas}
@@ -184,21 +185,27 @@ export function CreateExamDialog({
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="position"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-sm">Cargo</FormLabel>
+                  <FormLabel className="text-sm font-medium">Cargo</FormLabel>
                   <FormControl>
-                    <Input {...field} className="text-sm" />
+                    <ComboboxCreate
+                      options={cargos}
+                      value={field.value}
+                      onSetValue={field.onChange}
+                      placeholder="Selecione o cargo"
+                      emptyMessage="Nenhum cargo encontrado."
+                      searchPlaceholder="Procurar cargo..."
+                    />
                   </FormControl>
                   <FormMessage className="text-xs" />
                 </FormItem>
               )}
             />
-            <DialogFooter>
+            <DialogFooter className="pb-6">
               <Button type="submit" className="text-sm">
                 Criar Exame
               </Button>
@@ -209,3 +216,4 @@ export function CreateExamDialog({
     </Dialog>
   );
 }
+
