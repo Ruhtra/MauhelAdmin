@@ -1,4 +1,8 @@
 import { useState } from "react";
+import { MoreHorizontal } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { AddUserDialog } from "./AddUsers";
 import {
   Table,
   TableBody,
@@ -7,8 +11,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,7 +19,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MoreHorizontal, Plus } from "lucide-react";
 
 interface User {
   id: string;
@@ -26,6 +27,7 @@ interface User {
   role: "usuário" | "professor" | "admin";
   phone: string;
   cpf: string;
+  photo?: string;
 }
 
 const mockUsers: User[] = [
@@ -36,6 +38,7 @@ const mockUsers: User[] = [
     role: "usuário",
     phone: "(11) 98765-4321",
     cpf: "123.456.789-00",
+    photo: "https://i.pravatar.cc/150?u=joao@example.com",
   },
   {
     id: "2",
@@ -44,6 +47,7 @@ const mockUsers: User[] = [
     role: "professor",
     phone: "(11) 91234-5678",
     cpf: "987.654.321-00",
+    photo: "https://i.pravatar.cc/150?u=maria@example.com",
   },
   {
     id: "3",
@@ -56,24 +60,32 @@ const mockUsers: User[] = [
 ];
 
 export function UsersPage() {
-  const [users, setUsers] = useState<User[]>(mockUsers);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [users, setUsers] = useState(mockUsers);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredUsers = users.filter(
-    (user) =>
-      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.role.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredUsers = users.filter((user) =>
+    user.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleEdit = (userId: string) => {
-    // Implement edit functionality
-    console.log(`Edit user ${userId}`);
+  const handleAddUser = (name: string) => {
+    const newUser: User = {
+      id: (users.length + 1).toString(),
+      name,
+      email: "",
+      role: "usuário",
+      phone: "",
+      cpf: "",
+    };
+    setUsers([...users, newUser]);
   };
 
-  const handleDelete = (userId: string) => {
-    // Implement delete functionality
-    setUsers(users.filter((user) => user.id !== userId));
+  const handleEdit = (id: string) => {
+    // Implementar a funcionalidade de edição
+    console.log(`Editar usuário ${id}`);
+  };
+
+  const handleDelete = (id: string) => {
+    setUsers(users.filter((user) => user.id !== id));
   };
 
   return (
@@ -82,18 +94,41 @@ export function UsersPage() {
       <div className="flex justify-between items-center mb-6">
         <Input
           placeholder="Buscar usuários..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
           className="max-w-sm"
         />
-        <Button>
-          <Plus className="mr-2 h-4 w-4" /> Adicionar Usuário
-        </Button>
+        <AddUserDialog
+          onAddUser={function (
+            user:
+              | {
+                  email: string;
+                  userType: "collaborator" | "teacher";
+                  phone: string;
+                  fullName: string;
+                  cpf: string;
+                  photo: File;
+                }
+              | {
+                  email: string;
+                  userType: "subscriber";
+                  phone: string;
+                  firstName: string;
+                  lastName: string;
+                  state: string;
+                  city: string;
+                  photo?: File | undefined;
+                }
+          ): void {
+            throw new Error("Function not implemented.");
+          }}
+        />
       </div>
       <div className="rounded-md border">
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead>Foto</TableHead>
               <TableHead>Nome</TableHead>
               <TableHead>Email</TableHead>
               <TableHead>Cargo</TableHead>
@@ -105,6 +140,21 @@ export function UsersPage() {
           <TableBody>
             {filteredUsers.map((user) => (
               <TableRow key={user.id}>
+                <TableCell>
+                  {user.photo ? (
+                    <img
+                      src={user.photo}
+                      alt={`Foto de ${user.name}`}
+                      className="w-10 h-10 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
+                      <span className="text-gray-500 text-xl">
+                        {user.name.charAt(0).toUpperCase()}
+                      </span>
+                    </div>
+                  )}
+                </TableCell>
                 <TableCell className="font-medium">{user.name}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{user.role}</TableCell>

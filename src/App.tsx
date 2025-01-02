@@ -6,7 +6,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { ExamsPage } from "./pages/ExamsPage";
 import { TextsExamPage } from "./pages/ExamsPage/TextsExamPage";
 import CreateTextPage from "./pages/ExamsPage/TextsExamPage/CreateTextPage";
-import { UsersPage } from "./pages/ExamsPage/UsersPage";
+import { UsersPage } from "./pages/UsersPage";
 
 function Render() {
   return (
