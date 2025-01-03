@@ -26,7 +26,7 @@ export function SortableAlternative({
     <Card
       ref={setNodeRef}
       style={style}
-      className="p-2 mb-3 bg-secondary border-primary shadow-sm rounded-lg"
+      className="p-2 mb-3 bg-background border-primary shadow-sm rounded-lg"
     >
       <AlternativeItem
         index={index}

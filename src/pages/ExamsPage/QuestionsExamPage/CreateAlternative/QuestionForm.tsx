@@ -139,7 +139,7 @@ export function QuestionForm({ control }: QuestionFormProps) {
                 value={field.value}
                 placeHolder="Digite o enunciado da questão aqui"
                 onChange={field.onChange}
-                className="min-h-[150px] text-sm rounded-md border border-input bg-background px-3 py-2"
+                className="min-h-[150px] text-sm rounded-md border border-input bg-backgroud px-3 py-2"
               />
             </FormControl>
             <FormMessage className="text-xs" />

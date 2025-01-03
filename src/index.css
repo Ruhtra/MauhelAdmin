@@ -3,7 +3,7 @@
 @tailwind utilities;
 @layer base {
   :root {
-    --background: 30 20% 96%;
+    --background: 220 20% 97%;
     --foreground: 215 100% 34%;
     --card: 0 0% 100%;
     --card-foreground: 215 100% 34%;
@@ -13,14 +13,14 @@
     --primary-foreground: 0 0% 100%;
     --secondary: 0 70% 60%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 30 20% 90%;
+    --muted: 220 20% 92%;
     --muted-foreground: 215 40% 40%;
-    --accent: 30 30% 85%;
+    --accent: 220 30% 88%;
     --accent-foreground: 215 100% 34%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 30 30% 80%;
-    --input: 30 30% 80%;
+    --border: 220 30% 82%;
+    --input: 220 30% 82%;
     --ring: 215 100% 34%;
     --chart-1: 215 100% 34%;
     --chart-2: 0 85% 44%;
@@ -28,47 +28,47 @@
     --chart-4: 0 70% 55%;
     --chart-5: 215 60% 60%;
     --radius: 0.5rem;
-    --sidebar-background: 30 20% 94%;
+    --sidebar-background: 220 20% 95%;
     --sidebar-foreground: 215 40% 30%;
     --sidebar-primary: 215 100% 34%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 30 30% 90%;
+    --sidebar-accent: 220 30% 92%;
     --sidebar-accent-foreground: 215 100% 34%;
-    --sidebar-border: 30 30% 85%;
+    --sidebar-border: 220 30% 87%;
     --sidebar-ring: 215 100% 34%;
   }
   .dark {
-    --background: 215 40% 10%;
-    --foreground: 0 0% 98%;
-    --card: 215 40% 10%;
-    --card-foreground: 0 0% 98%;
-    --popover: 215 40% 10%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 215 100% 34%; /* Mauhel blue */
+    --background: 215 40% 8%;
+    --foreground: 220 20% 98%;
+    --card: 215 40% 12%;
+    --card-foreground: 220 20% 98%;
+    --popover: 215 40% 12%;
+    --popover-foreground: 220 20% 98%;
+    --primary: 215 100% 34%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 70% 60%; /* Lighter, more subtle red */
+    --secondary: 0 70% 60%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 215 40% 20%;
-    --muted-foreground: 215 20% 70%;
-    --accent: 0 70% 60%; /* Matching subtle red */
-    --accent-foreground: 0 0% 100%;
+    --muted: 215 40% 18%;
+    --muted-foreground: 220 20% 75%;
+    --accent: 215 40% 22%;
+    --accent-foreground: 220 20% 98%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 215 40% 20%;
-    --input: 215 40% 20%;
+    --destructive-foreground: 220 20% 98%;
+    --border: 215 40% 22%;
+    --input: 215 40% 22%;
     --ring: 215 100% 34%;
-    --chart-1: 215 100% 34%; /* Mauhel blue */
-    --chart-2: 0 85% 44%; /* Mauhel red */
+    --chart-1: 215 100% 34%;
+    --chart-2: 0 85% 44%;
     --chart-3: 215 80% 50%;
     --chart-4: 0 70% 55%;
     --chart-5: 215 60% 60%;
     --sidebar-background: 215 40% 10%;
-    --sidebar-foreground: 215 20% 90%;
+    --sidebar-foreground: 220 20% 90%;
     --sidebar-primary: 215 100% 34%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 215 40% 15%;
-    --sidebar-accent-foreground: 215 20% 90%;
-    --sidebar-border: 215 40% 20%;
+    --sidebar-accent: 215 40% 16%;
+    --sidebar-accent-foreground: 220 20% 90%;
+    --sidebar-border: 215 40% 22%;
     --sidebar-ring: 215 100% 34%;
   }
 }
