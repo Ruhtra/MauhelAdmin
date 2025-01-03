@@ -111,12 +111,12 @@ export function CreateExamDialog({
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-6 px-6"
           >
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 gap-6">
               <FormField
                 control={form.control}
                 name="year"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="flex flex-col">
                     <FormLabel className="text-sm font-medium">Ano</FormLabel>
                     <FormControl>
                       <YearPicker
@@ -134,7 +134,7 @@ export function CreateExamDialog({
                 control={form.control}
                 name="level"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="flex flex-col">
                     <FormLabel className="text-sm font-medium">Nível</FormLabel>
                     <FormControl>
                       <ComboboxCreate

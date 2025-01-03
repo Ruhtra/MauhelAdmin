@@ -1,12 +1,18 @@
-"use client";
-
-import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-import { useMediaQuery } from "./mediaQuery";
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 const data = [
   { month: "Jan", subscriptions: 100 },
@@ -18,31 +24,43 @@ const data = [
 ];
 
 export function SubscriptionChart() {
-  const isDesktop = useMediaQuery("(min-width: 768px)");
-
   return (
-    <ChartContainer
-      config={{
-        subscriptions: {
-          label: "Assinaturas",
-          color: "hsl(var(--chart-1))",
-        },
-      }}
-      className="h-[200px] md:h-[300px]"
-    >
-      <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={data}>
-          <XAxis dataKey="month" tick={{ fontSize: isDesktop ? 12 : 10 }} />
-          <YAxis tick={{ fontSize: isDesktop ? 12 : 10 }} />
-          <ChartTooltip content={<ChartTooltipContent />} />
-          <Line
-            type="monotone"
-            dataKey="subscriptions"
-            stroke="var(--color-subscriptions)"
-            strokeWidth={2}
-          />
-        </LineChart>
-      </ResponsiveContainer>
-    </ChartContainer>
+    <Card>
+      <CardHeader>
+        <CardTitle>Evolução de Assinaturas</CardTitle>
+        <CardDescription>
+          Número de assinaturas nos últimos 6 meses
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="pb-2">
+        <div className="h-[180px] sm:h-[280px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={data}>
+              <XAxis
+                dataKey="month"
+                stroke="#888888"
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
+              />
+              <YAxis
+                stroke="#888888"
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
+                tickFormatter={(value) => `${value}`}
+              />
+              <Tooltip />
+              <Line
+                type="monotone"
+                dataKey="subscriptions"
+                stroke="#8884d8"
+                strokeWidth={2}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      </CardContent>
+    </Card>
   );
 }

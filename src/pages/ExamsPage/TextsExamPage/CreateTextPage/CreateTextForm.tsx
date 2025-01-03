@@ -71,126 +71,122 @@ export function CreateTextForm() {
   }
 
   return (
-    <Card className="w-full max-w-4xl mx-auto">
-      <CardContent className="p-6">
-        <h1 className="text-3xl font-bold mb-6">Criar Novo Texto</h1>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <FormField
-                control={form.control}
-                name="number"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-sm font-medium">
-                      Nº do texto
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        className="text-sm"
-                        placeholder="Ex: 34"
-                      />
-                    </FormControl>
-                    <FormMessage className="text-xs" />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="contentType"
-                render={({ field }) => (
-                  <FormItem>
-                    <ContentTypeSelect
-                      value={field.value}
-                      onChange={field.onChange}
-                      onTypeChange={(value) => {
-                        if (value === "text") {
-                          form.setValue("content", "");
-                          setPreviewImage(null);
-                        }
-                      }}
-                    />
-                  </FormItem>
-                )}
-              />
-            </div>
-
+    <div className="w-full max-w-4xl mx-auto">
+      <h1 className="text-3xl font-bold mb-4">Criar Novo Texto</h1>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <FormField
               control={form.control}
-              name="content"
+              name="number"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-sm font-medium">
-                    Conteúdo
-                  </FormLabel>
-                  <FormControl>
-                    {form.watch("contentType") == "text" ? (
-                      <TiptapEditor
-                        content={field.value}
-                        onChange={field.onChange}
-                        placeholder="Digite o conteúdo do texto aqui..."
-                      />
-                    ) : (
-                      <div
-                        {...getRootProps()}
-                        className={`border-2 border-dashed rounded-md p-4 text-center cursor-pointer transition-colors ${
-                          isDragActive
-                            ? "border-primary bg-primary/10"
-                            : "border-gray-300 hover:border-primary"
-                        }`}
-                      >
-                        <input {...getInputProps()} />
-                        {previewImage ? (
-                          <div className="max-w-full max-h-[300px] mx-auto relative">
-                            <img
-                              src={previewImage}
-                              alt="Preview"
-                              className="max-w-full max-h-[300px] object-contain"
-                            />
-                          </div>
-                        ) : (
-                          <div className="py-10">
-                            <Upload className="mx-auto h-12 w-12 text-gray-400" />
-                            <p className="mt-2 text-sm text-gray-500">
-                              Arraste uma imagem ou clique para selecionar
-                            </p>
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </FormControl>
-                  <FormMessage className="text-xs" />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="reference"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-sm font-medium">
-                    Referência
+                    Nº do texto
                   </FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      className="text-sm italic"
-                      placeholder="Digite a referência aqui"
+                      className="text-sm"
+                      placeholder="Ex: 34"
                     />
                   </FormControl>
                   <FormMessage className="text-xs" />
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="contentType"
+              render={({ field }) => (
+                <FormItem>
+                  <ContentTypeSelect
+                    value={field.value}
+                    onChange={field.onChange}
+                    onTypeChange={(value) => {
+                      if (value === "text") {
+                        form.setValue("content", "");
+                        setPreviewImage(null);
+                      }
+                    }}
+                  />
+                </FormItem>
+              )}
+            />
+          </div>
 
-            <Button type="submit" className="w-full">
-              Criar Texto
-            </Button>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
+          <FormField
+            control={form.control}
+            name="content"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-sm font-medium">Conteúdo</FormLabel>
+                <FormControl>
+                  {form.watch("contentType") == "text" ? (
+                    <TiptapEditor
+                      content={field.value}
+                      onChange={field.onChange}
+                      placeholder="Digite o conteúdo do texto aqui..."
+                    />
+                  ) : (
+                    <div
+                      {...getRootProps()}
+                      className={`border-2 border-dashed rounded-md p-4 text-center cursor-pointer transition-colors ${
+                        isDragActive
+                          ? "border-primary bg-primary/10"
+                          : "border-gray-300 hover:border-primary"
+                      }`}
+                    >
+                      <input {...getInputProps()} />
+                      {previewImage ? (
+                        <div className="max-w-full max-h-[300px] mx-auto relative">
+                          <img
+                            src={previewImage}
+                            alt="Preview"
+                            className="max-w-full max-h-[300px] object-contain"
+                          />
+                        </div>
+                      ) : (
+                        <div className="py-10">
+                          <Upload className="mx-auto h-12 w-12 text-gray-400" />
+                          <p className="mt-2 text-sm text-gray-500">
+                            Arraste uma imagem ou clique para selecionar
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </FormControl>
+                <FormMessage className="text-xs" />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="reference"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-sm font-medium">
+                  Referência
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    className="text-sm italic"
+                    placeholder="Digite a referência aqui"
+                  />
+                </FormControl>
+                <FormMessage className="text-xs" />
+              </FormItem>
+            )}
+          />
+
+          <Button type="submit" className="w-full">
+            Criar Texto
+          </Button>
+        </form>
+      </Form>
+    </div>
   );
 }

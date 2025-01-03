@@ -1,12 +1,18 @@
-"use client";
-
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-import { useMediaQuery } from "./mediaQuery";
+  Bar,
+  BarChart,
+  ResponsiveContainer,
+  XAxis,
+  YAxis,
+  Tooltip,
+} from "recharts";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 const data = [
   { month: "Jan", revenue: 65000 },
@@ -18,26 +24,36 @@ const data = [
 ];
 
 export function FinancialChart() {
-  const isDesktop = useMediaQuery("(min-width: 768px)");
-
   return (
-    <ChartContainer
-      config={{
-        revenue: {
-          label: "Faturamento",
-          color: "hsl(var(--chart-2))",
-        },
-      }}
-      className="h-[200px] md:h-[300px]"
-    >
-      <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={data}>
-          <XAxis dataKey="month" tick={{ fontSize: isDesktop ? 12 : 10 }} />
-          <YAxis tick={{ fontSize: isDesktop ? 12 : 10 }} />
-          <ChartTooltip content={<ChartTooltipContent />} />
-          <Bar dataKey="revenue" fill="var(--color-revenue)" />
-        </BarChart>
-      </ResponsiveContainer>
-    </ChartContainer>
+    <Card>
+      <CardHeader>
+        <CardTitle>Faturamento Mensal</CardTitle>
+        <CardDescription>Faturamento dos últimos 6 meses</CardDescription>
+      </CardHeader>
+      <CardContent className="pb-2">
+        <div className="h-[180px] sm:h-[280px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={data}>
+              <XAxis
+                dataKey="month"
+                stroke="#888888"
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
+              />
+              <YAxis
+                stroke="#888888"
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
+                tickFormatter={(value) => `R$${value / 1000}k`}
+              />
+              <Tooltip />
+              <Bar dataKey="revenue" fill="#8884d8" radius={[4, 4, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </CardContent>
+    </Card>
   );
 }

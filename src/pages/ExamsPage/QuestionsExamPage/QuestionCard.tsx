@@ -23,7 +23,7 @@ export function QuestionCard({ question, actionMenu }: QuestionProps) {
 
   return (
     <Card className="h-full transition-shadow hover:shadow-md">
-      <CardHeader className="p-4">
+      <CardHeader className="">
         <CardTitle className="flex items-center justify-between text-lg">
           <div className="flex items-center space-x-4">
             <span className="font-medium">Questão {question.id}</span>
@@ -32,7 +32,7 @@ export function QuestionCard({ question, actionMenu }: QuestionProps) {
           {actionMenu}
         </CardTitle>
       </CardHeader>
-      <CardContent className="p-4 pt-0">
+      <CardContent className="pt-0">
         <p className="mb-4 text-sm leading-relaxed">{question.statement}</p>
         <Button
           variant="outline"

@@ -317,8 +317,8 @@ export function ExamsPage() {
   );
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-6 flex flex-col gap-4">
+    <div className="container mx-auto">
+      <div className="mb-4 flex flex-col gap-4">
         <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
           <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-200">
             Provas

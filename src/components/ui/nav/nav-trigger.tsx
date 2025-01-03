@@ -41,7 +41,7 @@ export function NavTrigger() {
           <Menu className="mr-2 h-4 w-4" />
           Menu
         </Button>
-        <Breadcrumb className="flex items-center">
+        <Breadcrumb className="hidden md:flex items-center">
           <BreadcrumbList>
             <BreadcrumbItem>
               {/* Atualizado o link de Home para /admin */}

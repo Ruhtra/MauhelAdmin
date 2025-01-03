@@ -11,9 +11,9 @@ export function SubscriptionTab() {
   const totalSubscriptions = 1234;
 
   return (
-    <div className="grid gap-6 md:grid-cols-2">
+    <div className="grid gap-2 md:grid-cols-2">
       <Card>
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1">
           <CardTitle className="text-sm font-medium">
             Total de Assinaturas
           </CardTitle>
@@ -34,7 +34,7 @@ export function SubscriptionTab() {
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <p className="text-xs text-muted-foreground mt-2">
+                <p className="text-xs text-muted-foreground mt-1">
                   +20% em relação ao mês anterior
                 </p>
               </motion.div>
@@ -42,16 +42,7 @@ export function SubscriptionTab() {
           </AnimatePresence>
         </CardContent>
       </Card>
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-sm font-medium">
-            Evolução de Assinaturas
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <SubscriptionChart />
-        </CardContent>
-      </Card>
+      <SubscriptionChart />
     </div>
   );
 }

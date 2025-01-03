@@ -41,7 +41,7 @@ export function QuestionsSheet() {
       <SheetTrigger asChild>
         <Button size="sm">Nova Questão</Button>
       </SheetTrigger>
-      <SheetContent className="w-full sm:max-w-3xl p-6 overflow-y-auto">
+      <SheetContent className="w-full sm:max-w-3xl p-4 overflow-y-auto">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <SheetHeader>

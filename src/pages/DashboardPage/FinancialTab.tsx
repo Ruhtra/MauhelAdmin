@@ -22,7 +22,7 @@ export function FinancialTab() {
     id: string;
   }) => (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1 ">
         <CardTitle className="text-sm font-medium">{title}</CardTitle>
         <button
           onClick={() => setExpandedCard(expandedCard === id ? null : id)}
@@ -45,7 +45,7 @@ export function FinancialTab() {
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <p className="text-xs text-muted-foreground mt-2">
+              <p className="text-xs text-muted-foreground mt-1">
                 +10% em relação ao período anterior
               </p>
             </motion.div>
@@ -56,8 +56,8 @@ export function FinancialTab() {
   );
 
   return (
-    <div className="grid gap-6">
-      <div className="grid gap-6 grid-cols-1 md:grid-cols-3">
+    <div className="grid gap-2">
+      <div className="grid gap-2 grid-cols-1 md:grid-cols-3">
         <ExpandableCard
           title="Faturamento Anual"
           value={annualRevenue}
@@ -74,16 +74,7 @@ export function FinancialTab() {
           id="ticket"
         />
       </div>
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-sm font-medium">
-            Faturamento Mensal
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <FinancialChart />
-        </CardContent>
-      </Card>
+      <FinancialChart />
     </div>
   );
 }

@@ -52,7 +52,7 @@ export function TextsExamPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto">
       <div className="mb-6 flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
         <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-200">
           Textos do Exame {examId}
