@@ -16,7 +16,6 @@ import { useDropzone } from "react-dropzone";
 import { Upload } from "lucide-react";
 import { ContentTypeSelect } from "@/components/ContentTypeSelect";
 import TiptapEditor from "@/components/TipTapEditor";
-import { Card, CardContent } from "@/components/ui/card";
 
 const formSchema = z.object({
   number: z.string().min(1, {

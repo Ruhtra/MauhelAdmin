@@ -23,7 +23,7 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Combobox } from "@/components/ui/combobox";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Plus, Camera, Trash } from "lucide-react";
+import { Plus, Camera } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,

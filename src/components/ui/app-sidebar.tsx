@@ -75,7 +75,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <Link to={"/"}>
                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-10 items-center justify-center overflow-hidden rounded-lg">
                   <img
-                    src="/logomahuel.png"
+                    src="/mauhelColorido.jpg"
                     className="h-full w-full object-contain bg-secondary"
                     alt="Mauhel IFRN Logo"
                   />
