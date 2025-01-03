@@ -88,7 +88,7 @@ const formSchema = z.discriminatedUnion("userType", [
   subscriberSchema.extend({ userType: z.literal("subscriber") }),
 ]);
 
-type FormValues = z.infer<typeof formSchema>;
+export type FormValues = z.infer<typeof formSchema>;
 
 interface AddUserDialogProps {
   onAddUser: (user: FormValues) => void;
@@ -159,13 +159,14 @@ export function AddUserDialog({ onAddUser }: AddUserDialogProps) {
                   <FormField
                     control={form.control}
                     name="photo"
-                    render={({ field }) => (
+                    render={() => (
                       <FormItem>
                         <FormControl>
                           <div className="relative">
                             <Avatar className="w-32 h-32">
                               <AvatarImage
                                 src={previewUrl || undefined}
+                                className="object-cover"
                                 alt="Preview"
                               />
                               <AvatarFallback>

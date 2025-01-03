@@ -1,5 +1,5 @@
 import { ChevronRight, LucideIcon } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 
 import {
   Collapsible,
@@ -14,7 +14,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
+  useSidebar,
 } from "@/components/ui/sidebar";
+import { useCallback } from "react";
 
 export interface NavMainProps {
   title: string;
@@ -25,6 +27,13 @@ export interface NavMainProps {
 }
 
 export function Collapsiblee({ item }: { item: NavMainProps }) {
+  const { toggleSidebar } = useSidebar();
+  const location = useLocation();
+
+  const handleLinkClick = useCallback(() => {
+    toggleSidebar();
+  }, [toggleSidebar]);
+
   return (
     <>
       <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
@@ -34,7 +43,11 @@ export function Collapsiblee({ item }: { item: NavMainProps }) {
             tooltip={item.title}
             isActive={location.pathname.includes(item.url)}
           >
-            <Link to={item.url} className="flex items-center text-sm">
+            <Link
+              onClick={handleLinkClick}
+              to={item.url}
+              className="flex items-center text-sm"
+            >
               {item.icon ? (
                 <item.icon className="mr-2 h-4 w-4" />
               ) : (

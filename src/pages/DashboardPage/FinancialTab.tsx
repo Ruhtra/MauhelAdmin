@@ -1,49 +1,89 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { FinancialChart } from "./FinancialChart"
+"use client";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { FinancialChart } from "./FinancialChart";
+import { useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function FinancialTab() {
-  // Substitua estes valores por dados reais da sua aplicação
-  const annualRevenue = 1000000
-  const monthlyRevenue = 85000
-  const averageTicket = 250
+  const [expandedCard, setExpandedCard] = useState<string | null>(null);
+  const annualRevenue = 1000000;
+  const monthlyRevenue = 85000;
+  const averageTicket = 250;
+
+  const ExpandableCard = ({
+    title,
+    value,
+    id,
+  }: {
+    title: string;
+    value: number;
+    id: string;
+  }) => (
+    <Card>
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <CardTitle className="text-sm font-medium">{title}</CardTitle>
+        <button
+          onClick={() => setExpandedCard(expandedCard === id ? null : id)}
+          className="md:hidden"
+        >
+          {expandedCard === id ? (
+            <ChevronUp size={20} />
+          ) : (
+            <ChevronDown size={20} />
+          )}
+        </button>
+      </CardHeader>
+      <CardContent>
+        <p className="text-2xl font-bold">R$ {value.toLocaleString()}</p>
+        <AnimatePresence>
+          {(expandedCard === id || window.innerWidth >= 768) && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <p className="text-xs text-muted-foreground mt-2">
+                +10% em relação ao período anterior
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </CardContent>
+    </Card>
+  );
 
   return (
     <div className="grid gap-6">
       <div className="grid gap-6 grid-cols-1 md:grid-cols-3">
-        <Card>
-          <CardHeader>
-            <CardTitle>Faturamento Anual</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-bold">R$ {annualRevenue.toLocaleString()}</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Faturamento Mensal</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-bold">R$ {monthlyRevenue.toLocaleString()}</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Ticket Médio</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-bold">R$ {averageTicket.toLocaleString()}</p>
-          </CardContent>
-        </Card>
+        <ExpandableCard
+          title="Faturamento Anual"
+          value={annualRevenue}
+          id="annual"
+        />
+        <ExpandableCard
+          title="Faturamento Mensal"
+          value={monthlyRevenue}
+          id="monthly"
+        />
+        <ExpandableCard
+          title="Ticket Médio"
+          value={averageTicket}
+          id="ticket"
+        />
       </div>
       <Card>
         <CardHeader>
-          <CardTitle>Faturamento Mensal</CardTitle>
+          <CardTitle className="text-sm font-medium">
+            Faturamento Mensal
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <FinancialChart />
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
-

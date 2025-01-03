@@ -23,11 +23,14 @@ import { YearPicker } from "./YearPicker";
 const currentYear = new Date().getFullYear();
 
 const formSchema = z.object({
-  year: z.number().min(1900, {
-    message: "O ano deve ser após 1900.",
-  }).max(currentYear, {
-    message: `O ano deve ser no máximo ${currentYear}.`,
-  }),
+  year: z
+    .number()
+    .min(1900, {
+      message: "O ano deve ser após 1900.",
+    })
+    .max(currentYear, {
+      message: `O ano deve ser no máximo ${currentYear}.`,
+    }),
   instituto: z.string().min(2, {
     message: "Instituto deve ter pelo menos 2 caracteres.",
   }),
@@ -104,7 +107,10 @@ export function CreateExamDialog({
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 px-6">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-6 px-6"
+          >
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <FormField
                 control={form.control}
@@ -149,8 +155,10 @@ export function CreateExamDialog({
               control={form.control}
               name="instituto"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-sm font-medium">Instituto</FormLabel>
+                <FormItem className="flex flex-col">
+                  <FormLabel className="text-sm font-medium">
+                    Instituto
+                  </FormLabel>
                   <FormControl>
                     <ComboboxCreate
                       options={institutos}
@@ -169,7 +177,7 @@ export function CreateExamDialog({
               control={form.control}
               name="banca"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="flex flex-col">
                   <FormLabel className="text-sm font-medium">Banca</FormLabel>
                   <FormControl>
                     <ComboboxCreate
@@ -189,7 +197,7 @@ export function CreateExamDialog({
               control={form.control}
               name="position"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="flex flex-col">
                   <FormLabel className="text-sm font-medium">Cargo</FormLabel>
                   <FormControl>
                     <ComboboxCreate
@@ -216,4 +224,3 @@ export function CreateExamDialog({
     </Dialog>
   );
 }
-
